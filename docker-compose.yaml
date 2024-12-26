@@ -1,0 +1,26 @@
+# การสร้าง Network
+networks:
+  # การตั้งชื่อ network
+  web_network:
+    name: web_network
+    # กำหนด driver ของ network
+    driver: bridge
+
+# การสร้าง Service
+services:
+  # การตั้งชื่อ service
+  nginx:
+    # pull image จาก Docker Hub
+    image: nginx:stable-alpine
+    # กำหนดชื่อ container
+    container_name: nginx_container
+    # กำหนด volume ที่จะเชื่อมกับ container
+    volumes:
+      - ./static-html:/usr/share/nginx/html
+    # กำหนด port ที่จะเปิดให้เข้าถึง container
+    ports:
+      - "8282:80"
+    # กำหนด network ที่ container จะเชื่อมต่อ
+    networks:
+      - web_network
+    restart: always
